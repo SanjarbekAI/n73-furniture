@@ -21,6 +21,7 @@ def blog_detail_view(request, pk):
         blog = Blog.objects.get(id=pk)
     except Blog.DoesNotExist:
         return render(request, 'shared/404.html')
+
     context = {
         "blog": blog
     }
