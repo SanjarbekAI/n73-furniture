@@ -149,32 +149,44 @@
                         </div>
                         <div id="acount" class="collapse">
                             <div class="account-list-content">
-                                <div>
-                                    <a class="login" href="account.html" rel="nofollow"
-                                       title="Log in to your customer account">
-                                        <i class="fa fa-cog"></i>
-                                        <span>My Account</span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a class="login" href="login.html" rel="nofollow"
-                                       title="Log in to your customer account">
-                                        <i class="fa fa-sign-in"></i>
-                                        <span>Sign in</span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a class="register" href="register.html" rel="nofollow" title="Register Account">
-                                        <i class="fa fa-user"></i>
-                                        <span>Register Account</span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a class="check-out" href="checkout.html" rel="nofollow" title="Checkout">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        <span>Checkout</span>
-                                    </a>
-                                </div>
+                                {% if request.user.is_authenticated %}
+                                    <div>
+                                        <a class="login" href="{% url 'users:account' %}l" rel="nofollow"
+                                           title="Log in to your customer account">
+                                            <i class="fa fa-cog"></i>
+                                            <span>My Account</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="login" href="" rel="nofollow"
+                                           title="Log out from account">
+                                            <i class="fa fa-sign-in"></i>
+                                            <span>Sign out</span>
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div>
+                                        <a class="login" href="{% url 'users:login' %}" rel="nofollow"
+                                           title="Log in to your customer account">
+                                            <i class="fa fa-sign-in"></i>
+                                            <span>Sign in</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="register" href="{% url 'users:register' %}" rel="nofollow"
+                                           title="Register Account">
+                                            <i class="fa fa-user"></i>
+                                            <span>Register Account</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="check-out" href="checkout.html" rel="nofollow" title="Checkout">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                            <span>Checkout</span>
+                                        </a>
+                                    </div>
+
+                                {% endif %}
                                 <div class="link_wishlist">
                                     <a href="wishlist.html" title="My Wishlists">
                                         <i class="fa fa-heart"></i>
@@ -221,6 +233,7 @@
                                         </li>
                                     </ul>
                                 </div>
+
                             </div>
                         </div>
                     </div>
