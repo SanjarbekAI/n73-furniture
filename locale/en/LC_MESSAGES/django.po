@@ -1,0 +1,224 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-02 15:01+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: blogs/apps.py:8
+msgid "blogs"
+msgstr ""
+
+#: blogs/models.py:10 shared/models.py:22 users/models.py:43
+msgid "Full name"
+msgstr ""
+
+#: blogs/models.py:14 blogs/models.py:95
+msgid "Image"
+msgstr ""
+
+#: blogs/models.py:18 templates/layout/header.html:123
+msgid "About"
+msgstr ""
+
+#: blogs/models.py:22
+msgid "Professions"
+msgstr ""
+
+#: blogs/models.py:26 users/models.py:55
+msgid "Is active"
+msgstr ""
+
+#: blogs/models.py:34
+msgid "Author"
+msgstr ""
+
+#: blogs/models.py:35 blogs/models.py:119
+msgid "Authors"
+msgstr ""
+
+#: blogs/models.py:41 blogs/models.py:64 blogs/models.py:85
+msgid "Title"
+msgstr ""
+
+#: blogs/models.py:49
+msgid "Parent category"
+msgstr ""
+
+#: blogs/models.py:57
+msgid "Category"
+msgstr ""
+
+#: blogs/models.py:58 blogs/models.py:109
+msgid "Categories"
+msgstr ""
+
+#: blogs/models.py:72
+msgid "Tag"
+msgstr ""
+
+#: blogs/models.py:73 blogs/models.py:114
+msgid "Tags"
+msgstr ""
+
+#: blogs/models.py:77
+msgid "Published"
+msgstr ""
+
+#: blogs/models.py:78
+msgid "Draft"
+msgstr ""
+
+#: blogs/models.py:79
+msgid "Deleted"
+msgstr ""
+
+#: blogs/models.py:89
+msgid "Short description"
+msgstr ""
+
+#: blogs/models.py:98
+msgid "Long description"
+msgstr ""
+
+#: blogs/models.py:104
+msgid "Status"
+msgstr ""
+
+#: blogs/models.py:127
+msgid "Blog"
+msgstr ""
+
+#: blogs/models.py:128 templates/blogs/blogs-list.html:5
+#: templates/layout/header.html:117
+msgid "Blogs"
+msgstr ""
+
+#: products/apps.py:8
+msgid "products"
+msgstr ""
+
+#: shared/apps.py:8
+msgid "shared"
+msgstr ""
+
+#: shared/models.py:8
+msgid "Created at"
+msgstr ""
+
+#: shared/models.py:12
+msgid "Updated at"
+msgstr ""
+
+#: shared/models.py:25 users/models.py:39
+msgid "Email"
+msgstr ""
+
+#: shared/models.py:29
+msgid "Subject"
+msgstr ""
+
+#: shared/models.py:32
+msgid "Message"
+msgstr ""
+
+#: shared/models.py:36
+msgid "Is read"
+msgstr ""
+
+#: shared/models.py:44 templates/layout/header.html:126
+msgid "Contact"
+msgstr ""
+
+#: shared/models.py:45
+msgid "Contacts"
+msgstr ""
+
+#: shared/views.py:19
+msgid "Successfully sent to the admin, thanks for your attention."
+msgstr ""
+
+#: templates/layout/header.html:114
+msgid "Home"
+msgstr ""
+
+#: templates/layout/header.html:120
+msgid "Products"
+msgstr ""
+
+#: templates/shared/home.html:569
+msgid "FREE DELIVERY FROM $ 250"
+msgstr ""
+
+#: users/admin.py:39
+msgid "Personal information"
+msgstr ""
+
+#: users/admin.py:42
+msgid "Permissions"
+msgstr ""
+
+#: users/admin.py:51
+msgid "Important dates"
+msgstr ""
+
+#: users/apps.py:8
+msgid "users"
+msgstr ""
+
+#: users/forms.py:30 users/forms.py:36
+msgid "User not found, please check your credentials"
+msgstr ""
+
+#: users/models.py:12
+msgid "Email is required"
+msgstr ""
+
+#: users/models.py:25
+msgid "Superuser must have is_staff=True"
+msgstr ""
+
+#: users/models.py:27
+msgid "Superuser must have is_superuser=True"
+msgstr ""
+
+#: users/models.py:35
+msgid "Username"
+msgstr ""
+
+#: users/models.py:50
+msgid "Phone number"
+msgstr ""
+
+#: users/models.py:59
+msgid "Is staff"
+msgstr ""
+
+#: users/models.py:72
+msgid "User"
+msgstr ""
+
+#: users/models.py:73
+msgid "Users"
+msgstr ""
+
+#: users/views.py:43
+msgid "We sent a confirmation link to your email, please verify it"
+msgstr ""
+
+#: users/views.py:72
+msgid "Something went wrong, please try again later"
+msgstr ""

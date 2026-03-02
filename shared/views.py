@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
 
 from shared.forms import ContactForm
 
@@ -15,7 +16,7 @@ def contact_page_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            text = "Successfully sent to the admin, thanks for your attention."
+            text = _("Successfully sent to the admin, thanks for your attention.")
             messages.success(request, text)
         else:
             errors = []

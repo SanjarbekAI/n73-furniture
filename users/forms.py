@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -26,13 +27,13 @@ class CustomAuthenticationForm(forms.Form):
         try:
             user = User.objects.get(Q(username=identifier) | Q(email=identifier))
         except User.DoesNotExist:
-            raise forms.ValidationError("User not found, please check your credentials")
+            raise forms.ValidationError(_("User not found, please check your credentials"))
 
         credentials = {'email': user.email, 'password': password}
 
         user_in = authenticate(self.request, **credentials)
         if user_in is None:
-            raise forms.ValidationError("User not found, please check your credentials")
+            raise forms.ValidationError(_("User not found, please check your credentials"))
 
         self.cleaned_data['user'] = user_in
         return self.cleaned_data
