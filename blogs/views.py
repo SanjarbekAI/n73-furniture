@@ -1,19 +1,24 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from blogs.models import Blog, BlogStatus, Category, Tag
 
 
-def blogs_list_view(request):
-    context = {
-        "blogs": Blog.objects.filter(status=BlogStatus.PUBLISHED),
-        "categories": Category.objects.filter(parent=None),
-        "tags": Tag.objects.all(),
-        "recent_posts": Blog.objects.order_by('-created_at')[:2]
-    }
-    return render(
-        request, 'blogs/blogs-list.html',
-        context
-    )
+class BlogListView(ListView):
+    model = Blog
+    template_name = 'blogs/blogs-list.html'
+    context_object_name = 'blogs'
+    paginate_by = 6
+
+    def get_queryset(self):
+        return Blog.objects.filter(status=BlogStatus.PUBLISHED).order_by('-id')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.filter(parent=None).order_by('-id')
+        context["tags"] = Tag.objects.all().order_by('-id')
+        context["recent_posts"] = Blog.objects.order_by('-created_at')[:2]
+        return context
 
 
 def blog_detail_view(request, pk):
