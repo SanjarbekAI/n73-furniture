@@ -4,10 +4,11 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, login
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import FormView
 
 from users.forms import CustomUserCreationForm, CustomAuthenticationForm
 from users.utils import email_verification_token
@@ -15,45 +16,46 @@ from users.utils import email_verification_token
 User = get_user_model()
 
 
-def register_view(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.is_active = False
-            user.save()
+class RegisterFormView(FormView):
+    template_name = 'users/register.html'
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('users:login')
 
-            # Build verification link
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = email_verification_token.make_token(user)
+    def form_valid(self, form):
+        user = form.save()
+        user.is_active = False
+        user.save()
 
-            link = request.build_absolute_uri(
-                reverse('users:verify-email', kwargs={'uidb64': uid, 'token': token})
-            )
+        # Build verification link
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = email_verification_token.make_token(user)
 
-            # Send email
-            thread = threading.Thread(target=send_mail, kwargs={
-                'subject': 'Verify your email',
-                'message': f'Click to verify your account: {link}',
-                'from_email': 'noreply@yourapp.com',
-                'recipient_list': [user.email],
-            })
-            thread.start()
+        link = self.request.build_absolute_uri(
+            reverse('users:verify-email', kwargs={'uidb64': uid, 'token': token})
+        )
 
-            text = _("We sent a confirmation link to your email, please verify it")
-            messages.success(request, text)
-            return redirect('users:register')
-        else:
-            errors = []
-            for field, field_errors in form.errors.items():
-                for error in field_errors:
-                    errors.append(f"{field}: {error}")
+        # Send email
+        thread = threading.Thread(target=send_mail, kwargs={
+            'subject': 'Verify your email',
+            'message': f'Click to verify your account: {link}',
+            'from_email': 'noreply@yourapp.com',
+            'recipient_list': [user.email],
+        })
+        thread.start()
 
-            error_text = " | ".join(errors)
-            messages.error(request, error_text)
-            return render(request, 'users/register.html')
-    else:
-        return render(request, 'users/register.html')
+        text = _("We sent a confirmation link to your email, please verify it")
+        messages.success(self.request, text)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = []
+        for field, field_errors in form.errors.items():
+            for error in field_errors:
+                errors.append(f"{field}: {error}")
+
+        error_text = " | ".join(errors)
+        messages.error(self.request, error_text)
+        return super().form_invalid(form)
 
 
 def verify_email_view(request, uidb64, token):

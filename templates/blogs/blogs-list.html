@@ -7,6 +7,7 @@
 {% block id %}id="blog-list-sidebar-left"{% endblock %}
 {% block class %}class="blog"{% endblock %}
 
+
 {% block content %}
     <div class="main-content">
         <div id="wrapper-site">
@@ -36,90 +37,7 @@
                         <div class="container">
                             <div class="content">
                                 <div class="row">
-                                    <div class="sidebar-3 sidebar-collection col-lg-3 col-md-3 col-sm-4">
-
-                                        <!-- category -->
-                                        <div class="sidebar-block">
-                                            <div class="title-block">{% trans 'Categories' %}</div>
-                                            <div class="block-content">
-                                                {% for category in categories %}
-                                                    <div class="cateTitle hasSubCategory open level1">
-                                                    <span class="arrow collapse-icons collapsed" data-toggle="collapse"
-                                                          data-target="#{{ category.id }}" aria-expanded="false"
-                                                          role="status">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                        <a class="cateItem" href="#">{{ category.title }}</a>
-                                                        <div class="subCategory collapse" id="{{ category.id }}"
-                                                             aria-expanded="true" role="status">
-                                                            {% for sub_cat in category.children.all %}
-                                                                <div class="cateTitle">
-                                                                    <a href="#" class="cateItem">{{ sub_cat.title }}</a>
-                                                                </div>
-                                                            {% endfor %}
-                                                        </div>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-
-                                        <!-- recent posts -->
-                                        <div class="sidebar-block">
-                                            <div class="title-block">{% trans 'Recent Posts' %}</div>
-                                            <div class="post-item-content">
-                                                {% for post in recent_posts %}
-                                                    <div>
-                                                        <div class="late-item first-child">
-                                                            <a href="{% url 'blogs:detail' pk=post.id %}">
-                                                                <p class="content-title">{{ post.title }}</p>
-                                                            </a>
-                                                            <span>
-                                                            <i class="zmdi zmdi-comments"></i>13 {% trans 'comments' %}
-                                                        </span>
-                                                            <span>
-                                                            <i class="zmdi zmdi-calendar-note"></i>{{ post.created_at|date:"d F Y" }}
-                                                        </span>
-                                                            <p class="description">{{ post.short_description|truncatechars:30 }}
-                                                            </p>
-                                                            <p class="remove">
-                                                                <a href="{% url 'blogs:detail' pk=post.id %}">{% trans 'READ MORE' %}</a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-
-                                        <!-- product tag -->
-                                        <div class="sidebar-block product-tags">
-                                            <div class="title-block">
-                                                {% trans 'Blog Tags' %}
-                                            </div>
-                                            <div class="block-content">
-                                                <ul class="listSidebarBlog list-unstyled">
-                                                    {% for tag in tags %}
-                                                        <li>
-                                                            <a href="#" title="Show products matching tag Hot Trend">
-                                                                {{ tag.title }}</a>
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <!-- advertising -->
-                                        <div class="sidebar-block group-image-special">
-                                            <div class="effect">
-                                                <a href="#">
-                                                    <img class="img-fluid" src="{% static 'img/blog/advertising.jpg' %}"
-                                                         alt="banner-2"
-                                                         title="banner-2">
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                    {% include 'blogs/blog-filter.html' %}
                                     <div class="col-sm-8 col-lg-9 col-md-9 flex-xs-first main-blogs">
                                         <h2>{% trans 'Recent Posts' %}</h2>
                                         {% for blog in blogs %}
@@ -168,7 +86,8 @@
                                                 {% endfor %}
                                                 {% if page_obj.has_next %}
                                                     <li>
-                                                        <a rel="next" href="?page={{ page_obj.next_page_number }}"
+                                                        <a rel="next"
+                                                           onclick="addUrlParameter('page', {{ page_obj.next_page_number }})"
                                                            class="next disabled js-search-link">
                                                             {% trans 'Next' %}
                                                         </a>
@@ -185,4 +104,32 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        function addUrlParameter(name, value) {
+            let searchParams = new URLSearchParams(window.location.search)
+
+            let existing = searchParams.get(name)
+            let values = existing ? existing.split(',') : []
+
+            const index = values.indexOf(String(value))
+
+            if (index !== -1) {
+                // value exists → remove it
+                values.splice(index, 1)
+            } else {
+                // value does not exist → add it
+                values.push(String(value))
+            }
+
+            if (values.length === 0) {
+                searchParams.delete(name)
+            } else {
+                searchParams.set(name, values.join(','))
+            }
+
+            window.location.search = searchParams.toString()
+        }
+    </script>
 {% endblock %}
