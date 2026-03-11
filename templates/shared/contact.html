@@ -1,7 +1,8 @@
 {% extends 'layout/base.html' %}
+{% load i18n %}
 {% load static %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}{% trans 'Contact' %}{% endblock %}
 
 {% block id %}id="contact"{% endblock %}
 {% block class %}class="blog"{% endblock %}
@@ -10,20 +11,19 @@
     <div class="main-content">
         <div id="wrapper-site">
             <div id="content-wrapper">
-
                 <!-- breadcrumb -->
                 <nav class="breadcrumb-bg">
                     <div class="container no-index">
                         <div class="breadcrumb">
                             <ol>
                                 <li>
-                                    <a href="#">
-                                        <span>Home</span>
+                                    <a href="{% url 'shared:home' %}">
+                                        <span>{% trans 'Home' %}</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <span>Contact</span>
+                                    <a href="{% url 'shared:contact' %}">
+                                        <span>{% trans 'Contact' %}</span>
                                     </a>
                                 </li>
                             </ol>
@@ -33,7 +33,7 @@
                 <div id="main">
                     <div class="page-home">
                         <div class="container">
-                            <h1 class="text-center title-page">Contact Us</h1>
+                            <h1 class="text-center title-page">{% trans 'Contact Us' %}</h1>
                             <div class="row-inhert">
                                 <div class="header-contact">
                                     <div class="row">
@@ -45,11 +45,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="item-right d-flex">
-                                                    <div class="title">Email:</div>
+                                                    <div class="title">{% trans 'Email' %}:</div>
                                                     <div class="contact-content">
-                                                        <a href="mailto:support@domain.com">support@domain.com</a>
-                                                        <br>
-                                                        <a href="mailto:contact@domain.com">contact@domain.com</a>
+                                                        <a href="mailto:support@domain.com">sanjarbekwork@gmail.com</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -62,10 +60,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="item-right d-flex">
-                                                    <div class="title">Address:</div>
+                                                    <div class="title">{% trans 'Address' %}:</div>
                                                     <div class="contact-content">
-                                                        23 Suspendis matti, Visaosang Building
-                                                        <br>District, NY Accums, North American
+                                                        {% trans 'Uzbekistan, Tashkent, Chilanzar 19' %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,10 +75,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="item-right d-flex">
-                                                    <div class="title">Hotline:</div>
+                                                    <div class="title">{% trans 'Phone' %}:</div>
                                                     <div class="contact-content">
-                                                        0123-456-78910
-                                                        <br>0987-654-32100
+                                                        +998 99 001 01 01
                                                     </div>
                                                 </div>
                                             </div>
@@ -95,12 +91,12 @@
                                     </div>
                                 </div>
                                 <div class="input-contact">
-                                    <p class="text-intro text-center">“Proin gravida nibh vel velit auctor aliquet.
-                                        Aenean sollicudin, lorem quis bibendum
-                                        auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio
-                                        sit
-                                        amet nibh vultate cursus a sit amet mauris. Proin gravida nibh vel velit auctor
-                                        aliquet.”
+                                    <p class="text-intro text-center">
+                                        {% blocktrans %}
+                                            This project is created by NT-Python-N73 students.
+                                            This is not commercial. You can send your information
+                                            by filling this form. Please be carefully to your words!
+                                        {% endblocktrans %}
                                     </p>
 
                                     <p class="icon text-center">
@@ -119,23 +115,24 @@
                                                         <div class="form-group row">
                                                             <div class="col-md-6">
                                                                 <input class="form-control" name="full_name"
-                                                                       placeholder="Your name">
+                                                                       placeholder="{% trans 'Your name' %}">
                                                             </div>
                                                             <div class="col-md-6 margin-bottom-mobie">
                                                                 <input class="form-control" name="email" type="email"
-                                                                       value="" placeholder="Your email">
+                                                                       value="" placeholder="{% trans 'Your email' %}">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <div class="col-md-12 margin-bottom-mobie">
                                                                 <input class="form-control" name="subject" type="text"
-                                                                       value="" placeholder="Subject">
+                                                                       value="" placeholder="{% trans 'Subject' %}">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <div class="col-md-12">
                                                                 <textarea class="form-control" name="message"
-                                                                          placeholder="Message" rows="8"></textarea>
+                                                                          placeholder="{% trans 'Message' %}"
+                                                                          rows="8"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -143,7 +140,7 @@
                                                         <button class="btn" type="submit" name="submitMessage">
                                                             <img class="img-fl"
                                                                  src="{% static 'img/other/contact_email.png' %}"
-                                                                 alt="img">Send message
+                                                                 alt="img">{% trans 'Send message' %}
                                                         </button>
                                                     </div>
                                                 </form>

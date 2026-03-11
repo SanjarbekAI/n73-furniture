@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from shared.models import Contact
+from shared.models import Contact, Team
 
 
 class MyTranslationOption(TranslationAdmin):
@@ -21,3 +21,10 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ['id', 'full_name', 'email', 'is_read', 'created_at']
     search_fields = ['full_name', 'email', 'subject', 'message']
     list_filter = ['is_read', 'created_at']
+
+
+@admin.register(Team)
+class ContactAdmin(MyTranslationOption):
+    list_display = ['id', 'full_name', 'position', 'is_active', 'created_at']
+    search_fields = ['full_name', 'position', 'info']
+    list_filter = ['is_active', 'created_at']

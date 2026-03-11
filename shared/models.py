@@ -43,3 +43,26 @@ class Contact(BaseModel):
         db_table = 'contacts'
         verbose_name = _("Contact")
         verbose_name_plural = _("Contacts")
+
+
+class Team(BaseModel):
+    full_name = models.CharField(
+        max_length=128,
+        verbose_name=_("Full name")
+    )
+
+    position = models.CharField(
+        max_length=128,
+        verbose_name=_("Position")
+    )
+
+    info = models.TextField(verbose_name=_("Info"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Is active"))
+
+    def __str__(self):
+        return self.full_name
+
+    class Meta:
+        db_table = 'teams'
+        verbose_name = _("Team")
+        verbose_name_plural = _("Teams")

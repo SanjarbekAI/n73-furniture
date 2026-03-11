@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 
 from shared.forms import ContactForm
+from shared.models import Team
 
 
 def home_page_view(request):
@@ -30,4 +31,7 @@ def contact_page_view(request):
 
 
 def about_page_view(request):
-    return render(request, 'shared/about-us.html')
+    context = {
+        "members": Team.objects.filter(is_active=True).order_by("-created_at")
+    }
+    return render(request, 'shared/about-us.html', context)

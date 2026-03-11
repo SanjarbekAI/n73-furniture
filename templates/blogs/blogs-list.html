@@ -20,18 +20,13 @@
                                 <div class="breadcrumb">
                                     <ol>
                                         <li>
-                                            <a href="#">
-                                                <span>Home</span>
+                                            <a href="{% url 'shared:home' %}">
+                                                <span>{% trans 'Home' %}</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                <span>Living Room</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span>Sofa</span>
+                                            <a href="{% url 'blogs:list' %}">
+                                                <span>{% trans 'Blogs' %}</span>
                                             </a>
                                         </li>
                                     </ol>
@@ -45,7 +40,7 @@
 
                                         <!-- category -->
                                         <div class="sidebar-block">
-                                            <div class="title-block">Categories</div>
+                                            <div class="title-block">{% trans 'Categories' %}</div>
                                             <div class="block-content">
                                                 {% for category in categories %}
                                                     <div class="cateTitle hasSubCategory open level1">
@@ -71,7 +66,7 @@
 
                                         <!-- recent posts -->
                                         <div class="sidebar-block">
-                                            <div class="title-block">Recent Posts</div>
+                                            <div class="title-block">{% trans 'Recent Posts' %}</div>
                                             <div class="post-item-content">
                                                 {% for post in recent_posts %}
                                                     <div>
@@ -80,7 +75,7 @@
                                                                 <p class="content-title">{{ post.title }}</p>
                                                             </a>
                                                             <span>
-                                                            <i class="zmdi zmdi-comments"></i>13 comment
+                                                            <i class="zmdi zmdi-comments"></i>13 {% trans 'comments' %}
                                                         </span>
                                                             <span>
                                                             <i class="zmdi zmdi-calendar-note"></i>{{ post.created_at|date:"d F Y" }}
@@ -88,7 +83,7 @@
                                                             <p class="description">{{ post.short_description|truncatechars:30 }}
                                                             </p>
                                                             <p class="remove">
-                                                                <a href="{% url 'blogs:detail' pk=post.id %}">READ MORE</a>
+                                                                <a href="{% url 'blogs:detail' pk=post.id %}">{% trans 'READ MORE' %}</a>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -99,13 +94,13 @@
                                         <!-- product tag -->
                                         <div class="sidebar-block product-tags">
                                             <div class="title-block">
-                                                Blog Tags
+                                                {% trans 'Blog Tags' %}
                                             </div>
                                             <div class="block-content">
                                                 <ul class="listSidebarBlog list-unstyled">
                                                     {% for tag in tags %}
                                                         <li>
-                                                            <a href="#" title="Show products matching tag Hot Trend">Hot
+                                                            <a href="#" title="Show products matching tag Hot Trend">
                                                                 {{ tag.title }}</a>
                                                         </li>
                                                     {% endfor %}
@@ -126,7 +121,7 @@
 
                                     </div>
                                     <div class="col-sm-8 col-lg-9 col-md-9 flex-xs-first main-blogs">
-                                        <h2>Recent Posts</h2>
+                                        <h2>{% trans 'Recent Posts' %}</h2>
                                         {% for blog in blogs %}
                                             <div class="list-content row">
                                                 <div class="hover-after col-md-5 col-xs-12">
@@ -139,7 +134,7 @@
                                                         <a href="{% url 'blogs:detail' pk=blog.id %}">{{ blog.title }}</a>
                                                     </p>
                                                     <p class="post-info">
-                                                        <span>{{ blog.created_at|timesince }} minitunes ago</span>
+                                                        <span>{{ blog.created_at|timesince }} {% trans 'minutes ago' %}</span>
                                                         <span>113 Comments</span>
                                                         {% for author in blog.authors.all %}
                                                             <span>{{ author.full_name }},</span>
@@ -148,7 +143,7 @@
                                                     <p class="description">{{ blog.short_description }}
                                                     </p>
                                                     <span class="view-more">
-                                                    <a href="{% url 'blogs:detail' pk=blog.id %}">view more</a>
+                                                    <a href="{% url 'blogs:detail' pk=blog.id %}">{% trans 'view more' %}</a>
                                                 </span>
                                                 </div>
                                             </div>
@@ -157,7 +152,7 @@
                                             <ul class="justify-content-center d-flex">
                                                 <li>
                                                     <a rel="prev" href="#" class="previous disabled js-search-link">
-                                                        Previous
+                                                        {% trans 'Previous' %}
                                                     </a>
                                                 </li>
                                                 <li class="current active">
@@ -172,7 +167,7 @@
                                                 </li>
                                                 <li>
                                                     <a rel="next" href="#" class="next disabled js-search-link">
-                                                        Next
+                                                        {% trans 'Next' %}
                                                     </a>
                                                 </li>
                                             </ul>
