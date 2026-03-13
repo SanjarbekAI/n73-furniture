@@ -162,4 +162,5 @@ cython_debug/
 .idea/
 static
 codes
+core/settings_local.py
 
