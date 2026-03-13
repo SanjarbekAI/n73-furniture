@@ -28,6 +28,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['n73.ezma.uz', 'www.n73.ezma.uz']
 
+CSRF_TRUSTED_ORIGINS = ['https://n73.ezma.uz', 'https://www.n73.ezma.uz']
+
 # Application definition
 
 INSTALLED_APPS = [
