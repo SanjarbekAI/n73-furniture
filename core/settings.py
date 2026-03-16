@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['n73.ezma.uz', 'www.n73.ezma.uz']
+ALLOWED_HOSTS = ['n73.ezma.uz', 'www.n73.ezma.uz', 'localhost', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ['https://n73.ezma.uz', 'https://www.n73.ezma.uz']
 
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
