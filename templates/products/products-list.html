@@ -375,12 +375,13 @@
                                                     <div class="d-flex sort-by-row justify-content-lg-end justify-content-md-end">
 
                                                         <div class="products-sort-order dropdown">
-                                                            <select class="select-title">
-                                                                <option value="">Sort by</option>
-                                                                <option value="">Name, A to Z</option>
-                                                                <option value="">Name, Z to A</option>
-                                                                <option value="">Price, low to high</option>
-                                                                <option value="">Price, high to low</option>
+                                                            <select onchange="addUrlParameter('ordering', this.value)"
+                                                                    name="ordering" class="select-title">
+                                                                <option selected value="">Sort by</option>
+                                                                <option value="name">Name, A to Z</option>
+                                                                <option value="-name">Name, Z to A</option>
+                                                                <option value="price_uzs">Price, low to high</option>
+                                                                <option value="-price_uzs">Price, high to low</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -611,4 +612,50 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        function addUrlParameter(name, value) {
+            let searchParams = new URLSearchParams(window.location.search)
+
+            if (name === 'ordering') {
+                const existing = searchParams.get('ordering')
+                const normalizedValue = String(value).replace(/^-/, '')
+                const normalizedExisting = existing ? existing.replace(/^-/, '') : null
+
+                if (normalizedExisting === normalizedValue && existing === String(value)) {
+                    // exact same value → remove it
+                    searchParams.delete('ordering')
+                } else {
+                    // different value or toggled sign → replace
+                    searchParams.set('ordering', String(value))
+                }
+            } else {
+                let existing = searchParams.get(name)
+                let values = existing ? existing.split(',') : []
+
+                const normalizedValue = String(value).replace(/^-/, '')
+                const index = values.findIndex(v => v.replace(/^-/, '') === normalizedValue)
+
+                if (index !== -1) {
+                    if (values[index] === String(value)) {
+                        values.splice(index, 1)
+                    } else {
+                        values[index] = String(value)
+                    }
+                } else {
+                    values.push(String(value))
+                }
+
+                if (values.length === 0) {
+                    searchParams.delete(name)
+                } else {
+                    searchParams.set(name, values.join(','))
+                }
+            }
+
+            window.location.search = searchParams.toString()
+        }
+    </script>
 {% endblock %}

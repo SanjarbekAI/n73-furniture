@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
 {% load static %}
-{% block title %}Products Detail{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 {% block id %}id="product-detail"{% endblock %}
 {% block content %}
     <div class="main-content">
@@ -521,22 +521,7 @@
                                                             <p class="product-minimal-quantity">
                                                             </p>
                                                         </div>
-                                                        <div class="d-flex2 has-border">
-                                                            <div class="btn-group">
-                                                                <a href="#">
-                                                                    <i class="zmdi zmdi-share"></i>
-                                                                    <span>Share</span>
-                                                                </a>
-                                                                <a href="#" class="email">
-                                                                    <i class="fa fa-envelope" aria-hidden="true"></i>
-                                                                    <span>SEN TO A FRIEND</span>
-                                                                </a>
-                                                                <a href="#" class="print">
-                                                                    <i class="zmdi zmdi-print"></i>
-                                                                    <span>Print</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
+
                                                         <div class="rating-comment has-border d-flex">
                                                             <div class="review-description d-flex">
                                                                 <span>REVIEW :</span>
@@ -598,9 +583,6 @@
                                                         <a data-toggle="tab" href="#description" class="active show">Description</a>
                                                     </li>
                                                     <li>
-                                                        <a data-toggle="tab" href="#tag">Product Tags</a>
-                                                    </li>
-                                                    <li>
                                                         <a data-toggle="tab" href="#review">Reviews (2)</a>
                                                     </li>
                                                 </ul>
@@ -624,7 +606,6 @@
                                                             tempor incididunt ut labore et dolore magna aliqua.
                                                         </p>
                                                     </div>
-
                                                     <div id="review" class="tab-pane fade">
                                                         <div class="spr-form">
                                                             <div class="user-comment">
@@ -729,16 +710,6 @@
                                                                     </fieldset>
                                                                 </div>
                                                             </fieldset>
-                                                            <fieldset class="spr-form-contact">
-                                                                <div class="spr-form-contact-name">
-                                                                    <input class="spr-form-input spr-form-input-text form-control"
-                                                                           value="" placeholder="Enter your name">
-                                                                </div>
-                                                                <div class="spr-form-contact-email">
-                                                                    <input class="spr-form-input spr-form-input-email form-control"
-                                                                           value="" placeholder="Enter your email">
-                                                                </div>
-                                                            </fieldset>
                                                             <fieldset>
                                                                 <div class="spr-form-review-body">
                                                                     <div class="spr-form-input">
@@ -754,24 +725,6 @@
                                                                        value="Submit Review">
                                                             </div>
                                                         </form>
-                                                    </div>
-                                                    <div id="tag" class="tab-pane fade in">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                                                            do
-                                                            eiusmod tempor incididunt ut labore et dolore magna
-                                                            aliqua.Lorem
-                                                            ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                            eiusmod
-                                                            tempor incididunt ut labore et dolore magna aliqua.
-                                                        </p>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                                                            do
-                                                            eiusmod tempor incididunt ut labore et dolore magna
-                                                            aliqua.Lorem
-                                                            ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                            eiusmod
-                                                            tempor incididunt ut labore et dolore magna aliqua.
-                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>

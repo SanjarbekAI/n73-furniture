@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
@@ -16,6 +17,10 @@ class ProductListView(ListView):
         manufacture = self.request.GET.get('manufacture')
         tag = self.request.GET.get('tag')
         color = self.request.GET.get('color')
+        q = self.request.GET.get('q')
+        ordering = self.request.GET.get('ordering')
+        if q:
+            queryset = queryset.filter(Q(name__icontains=q))
 
         if manufacture:
             queryset = queryset.filter(manufacture__id=int(manufacture))
@@ -23,6 +28,9 @@ class ProductListView(ListView):
             queryset = queryset.filter(tags__id=int(tag))
         if color:
             queryset = queryset.filter(colors__id=int(color))
+
+        if ordering in ['name', '-name', 'price_uzs', '-price_uzs']:
+            queryset = queryset.order_by(ordering)
 
         return queryset.distinct()
 
