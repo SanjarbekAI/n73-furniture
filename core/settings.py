@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_celery_beat',
-
     'shared',
     'blogs',
     'products',
@@ -181,7 +179,6 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': 60.0,  # every 60 seconds
     },
 }
-
 
 try:
     from .settings_local import *

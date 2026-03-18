@@ -1,4 +1,5 @@
 {% extends 'layout/base.html' %}
+{% load my_tags %}
 {% load static %}
 
 {% block title %}Products{% endblock %}
@@ -393,7 +394,7 @@
                                                         <div class="item text-center col-md-4">
                                                             <div class="product-miniature js-product-miniature item-one first-item">
                                                                 <div class="thumbnail-container border">
-                                                                    <a href="product-detail.html">
+                                                                    <a href="{% url 'products:detail' pk=product.id %}">
                                                                         {% for image in product.images.all %}
                                                                             <img class="img-fluid {% if forloop.first %}image-cover{% else %}image-secondary{% endif %}"
                                                                                  src="{{ image.image.url }}"
@@ -436,9 +437,11 @@
                                                                               class="formAddToCart">
                                                                             <input type="hidden" name="id_product"
                                                                                    value="1">
-                                                                            <a class="add-to-cart" href="#"
+                                                                            <a class="add-to-cart"
+                                                                               href="{% url 'products:cart' pk=product.id %}?next={{ request.get_full_path|urlencode }}"
                                                                                data-button-action="add-to-cart">
-                                                                                <i class="fa fa-shopping-cart"
+                                                                                <i {% if product|in_cart:request %}style="color: red;"{% endif %}
+                                                                                   class="fa fa-shopping-cart"
                                                                                    aria-hidden="true"></i>
                                                                             </a>
                                                                         </form>
