@@ -14,3 +14,9 @@ def get_full_path(path, code):
 def in_cart(product, request):
     cart = request.session.get('cart', [])
     return product.id in cart
+
+
+@register.filter
+def in_wishlist(product, request):
+    wishlist = request.session.get('wishlist', [])
+    return product.id in wishlist

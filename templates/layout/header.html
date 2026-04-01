@@ -153,14 +153,14 @@
                             <div class="account-list-content">
                                 {% if request.user.is_authenticated %}
                                     <div>
-                                        <a class="login" href="{% url 'users:account' %}l" rel="nofollow"
+                                        <a class="login" href="{% url 'users:account' %}" rel="nofollow"
                                            title="Log in to your customer account">
                                             <i class="fa fa-cog"></i>
                                             <span>My Account</span>
                                         </a>
                                     </div>
                                     <div>
-                                        <a class="login" href="" rel="nofollow"
+                                        <a class="login" href="{% url 'users:logout' %}" rel="nofollow"
                                            title="Log out from account">
                                             <i class="fa fa-sign-in"></i>
                                             <span>Sign out</span>
@@ -190,7 +190,7 @@
 
                                 {% endif %}
                                 <div class="link_wishlist">
-                                    <a href="wishlist.html" title="My Wishlists">
+                                    <a href="{% url 'products:wishlist-products' %}" title="My Wishlists">
                                         <i class="fa fa-heart"></i>
                                         <span>My Wishlists</span>
                                     </a>
@@ -214,6 +214,10 @@
                                             {% with flag_path='img/flags/'|add:lang.0|add:'.jpg' %}
                                                 <li class="list-inline-item">
                                                     <a href="{{ request.scheme }}://
+
+
+
+
                                                             {{ request.get_host }}{% get_full_path request.path lang.0.lower %}">
                                                         <img class="img-fluid"
                                                              src="{% static flag_path %}"
@@ -231,34 +235,36 @@
                     <div class="desktop_cart">
                         <div class="blockcart block-cart cart-preview tiva-toggle">
                             <div class="header-cart tiva-toggle-btn">
-                                <span class="cart-products-count">1</span>
+                                <span class="cart-products-count">{{ cart_count }}</span>
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </div>
                             <div class="dropdown-content">
                                 <div class="cart-content">
                                     <table>
                                         <tbody>
-                                        <tr>
-                                            <td class="product-image">
-                                                <a href="product-detail.html">
-                                                    <img src="{% static 'img/product/5.jpg' %}" alt="Product">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <div class="product-name">
-                                                    <a href="product-detail.html">Organic Strawberry Fruits</a>
-                                                </div>
-                                                <div>
-                                                    2 x
-                                                    <span class="product-price">£28.98</span>
-                                                </div>
-                                            </td>
-                                            <td class="action">
-                                                <a class="remove" href="#">
-                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        {% for product in cart_products %}
+                                            <tr>
+                                                <td class="product-image">
+                                                    <a href="{% url 'products:detail' pk=product.id %}">
+                                                        <img src="{{ product.image.url }}" alt="Product">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <div class="product-name">
+                                                        <a href="{% url 'products:detail' pk=product.id %}">{{ product.name }}</a>
+                                                    </div>
+                                                    <div>
+                                                        2 x
+                                                        <span class="product-price">{{ product.price_uzs }}</span>
+                                                    </div>
+                                                </td>
+                                                <td class="action">
+                                                    <a class="remove" href="#">
+                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                         <tr class="total">
                                             <td colspan="2">Total:</td>
                                             <td>£92.96</td>

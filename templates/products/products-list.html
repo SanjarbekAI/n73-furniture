@@ -446,9 +446,12 @@
                                                                                    aria-hidden="true"></i>
                                                                             </a>
                                                                         </form>
-                                                                        <a class="addToWishlist" href="#" data-rel="1"
+                                                                        <a class="addToWishlist"
+                                                                           href="{% url 'products:wishlist' pk=product.id %}?next={{ request.get_full_path|urlencode }}"
+                                                                           data-rel="1"
                                                                            onclick="">
-                                                                            <i class="fa fa-heart"
+                                                                            <i {% if product|in_wishlist:request %}style="color: red{% endif %}"
+                                                                               class="fa fa-heart"
                                                                                aria-hidden="true"></i>
                                                                         </a>
                                                                         <a href="{% url 'products:detail' pk=product.id %}"

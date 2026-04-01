@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 {% load static %}
-{% block title %}Account{% endblock %}
-{% block class %}class="user-acount"{% endblock %}
+{% block title %}My Account{% endblock %}
+{% block class %}class="user-acount blog"{% endblock %}
 {% block content %}
     <div class="main-content">
         <div class="wrap-banner">
@@ -12,7 +12,7 @@
                     <div class="breadcrumb">
                         <ol>
                             <li>
-                                <a href="#">
+                                <a href="{% url 'shared:home' %}">
                                     <span>Home</span>
                                 </a>
                             </li>
@@ -26,53 +26,54 @@
                 </div>
             </nav>
 
-            <div class="acount head-acount">
-                <div class="container">
-                    <div id="main">
-                        <h1 class="title-page">My Account</h1>
-                        <div class="content" id="block-history">
-                            <table class="std table">
-                                <tbody>
-                                <tr>
-                                    <th class="first_item">My Name :</th>
-                                    <td>David James</td>
-                                </tr>
-                                <tr>
-                                    <th class="first_item">Company :</th>
-                                    <td>TivaTheme</td>
-                                </tr>
-                                <tr>
-                                    <th class="first_item">Address :</th>
-                                    <td>123 canberra Street, New York, USA</td>
-                                </tr>
-                                <tr>
-                                    <th class="first_item">City :</th>
-                                    <td>New York</td>
-                                </tr>
-                                <tr>
-                                    <th class="first_item">Postal/Zip Code :</th>
-                                    <td>10001</td>
-                                </tr>
-                                <tr>
-                                    <th class="first_item">Phone :</th>
-                                    <td>0123456789</td>
-                                </tr>
-                                <tr>
-                                    <th class="first_item">Country:</th>
-                                    <td>USA</td>
-                                </tr>
-                                </tbody>
-                            </table>
+        </div>
 
-                        </div>
-                        <button class="btn btn-primary" data-link-action="sign-in" type="submit">
-                            view Address
-                        </button>
-                        <div class="order">
-                            <h4>Order
-                                <span class="detail">History</span>
-                            </h4>
-                            <p>You haven't placed any orders yet.</p>
+        <!-- main -->
+        <div id="wrapper-site">
+            <div id="content-wrapper" class="full-width">
+                <div id="main">
+                    <div class="container">
+                        <h1 class="text-center title-page">My Account</h1>
+                        <div class="login-form">
+                            <form id="customer-form" action="{% url 'users:account' %}" method="post">
+                                {% csrf_token %}
+                                <div>
+                                    <div class="form-group no-gutters">
+                                        <input class="form-control" name="full_name" type="text"
+                                               placeholder="Full Name"
+                                               value="{{ form.full_name.value|default_if_none:'' }}">
+                                    </div>
+                                    <div class="form-group no-gutters">
+                                        <input class="form-control" name="username" type="text"
+                                               placeholder="Username"
+                                               value="{{ form.username.value|default_if_none:'' }}">
+                                    </div>
+                                    <div class="form-group no-gutters">
+                                        <input class="form-control" name="email" type="email"
+                                               placeholder="Email"
+                                               value="{{ form.email.value|default_if_none:'' }}">
+                                    </div>
+                                    <div class="form-group no-gutters">
+                                        <input class="form-control" name="phone_number" type="text"
+                                               placeholder="Phone Number"
+                                               value="{{ form.phone_number.value|default_if_none:'' }}">
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="text-center no-gutters">
+                                        <a href="{% url 'users:reset-password' %}">
+                                            <button class="btn btn-secondary" data-link-action="sign-in" type="button">
+                                                Change Password
+                                            </button>
+                                        </a>
+                                        <button class="btn btn-primary" data-link-action="sign-in" type="submit">
+                                            Update Account
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
 

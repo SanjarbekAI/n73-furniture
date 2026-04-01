@@ -2,21 +2,24 @@ import threading
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 from django.views.generic import FormView
 
-from users.forms import CustomUserCreationForm, CustomAuthenticationForm
+from users.forms import CustomUserCreationForm, CustomAuthenticationForm, AccountUpdateForm, ResetPasswordForm
 from users.utils import email_verification_token
 
 User = get_user_model()
 
 
-class RegisterFormView(FormView):
+class RegisterFormView(LoginRequiredMixin, FormView):
     template_name = 'users/register.html'
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('users:login')
@@ -75,29 +78,91 @@ def verify_email_view(request, uidb64, token):
         return render(request, 'users/login.html')
 
 
-def login_view(request):
-    if request.method == 'POST':
-        form = CustomAuthenticationForm(request=request, data=request.POST)
-        if form.is_valid():
-            user = form.cleaned_data['user']
-            login(request, user)
-            return redirect('shared:home')
-        else:
-            errors = []
-            for field, field_errors in form.errors.items():
-                for error in field_errors:
-                    errors.append(f"{field}: {error}")
+class LoginFormView(FormView):
+    template_name = 'users/login.html'
+    form_class = CustomAuthenticationForm
+    success_url = reverse_lazy('shared:home')
 
-            error_text = " | ".join(errors)
-            messages.error(request, error_text)
-            return render(request, 'users/login.html', )
-    else:
-        return render(request, 'users/login.html', )
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def form_valid(self, form):
+        user = form.cleaned_data['user']
+        login(self.request, user)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = []
+        for field, field_errors in form.errors.items():
+            for error in field_errors:
+                errors.append(f"{field}: {error}")
+        error_text = " | ".join(errors)
+        messages.error(self.request, error_text)
+        return super().form_invalid(form)
 
 
-def account_view(request):
-    return render(request, 'users/account.html')
+class ResetPasswordFormView(LoginRequiredMixin, FormView):
+    template_name = 'users/reset-password.html'
+    form_class = ResetPasswordForm
+    success_url = reverse_lazy('users:login')
+
+    def form_valid(self, form):
+        user = self.request.user
+        current_password = form.cleaned_data['current_password']
+        new_password = form.cleaned_data['new_password']
+        confirm_password = form.cleaned_data['confirm_password']
+
+        if not user.check_password(current_password):
+            messages.error(self.request, _("Current password is incorrect"))
+            return super().form_invalid(form)
+
+        if new_password != confirm_password:
+            messages.error(self.request, _("New password and confirm password do not match"))
+            return super().form_invalid(form)
+
+        user.set_password(new_password)
+        user.save()
+        messages.success(self.request, _("Your password has been reset successfully"))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = []
+        for field, field_errors in form.errors.items():
+            for error in field_errors:
+                errors.append(f"{field}: {error}")
+        error_text = " | ".join(errors)
+        messages.error(self.request, error_text)
+        return super().form_invalid(form)
 
 
-def reset_password_view(request):
-    return render(request, 'users/reset-password.html')
+class AccountUpdateView(LoginRequiredMixin, FormView):
+    template_name = 'users/account.html'
+    form_class = AccountUpdateForm
+    success_url = reverse_lazy('users:account')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, _("Your account has been updated successfully"))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        errors = []
+        for field, field_errors in form.errors.items():
+            for error in field_errors:
+                errors.append(f"{field}: {error}")
+        error_text = " | ".join(errors)
+        messages.error(self.request, error_text)
+        return super().form_invalid(form)
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('shared:home')

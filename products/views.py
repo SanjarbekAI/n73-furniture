@@ -70,3 +70,42 @@ def add_or_remove_from_cart(request, pk):
     request.session['cart'] = cart
     next_url = request.GET.get('next', reverse_lazy('products:list'))
     return redirect(next_url)
+
+
+def add_or_remove_from_wishlist(request, pk):
+    wishlist = request.session.get('wishlist', [])
+    # session = {
+    #     'cart': {
+    #         1: {
+    #             "quantity": 2,
+    #             "color": 1
+    #         }
+    #     }
+    # }
+    if pk in wishlist:
+        wishlist.remove(pk)
+    else:
+        wishlist.append(pk)
+
+    request.session['wishlist'] = wishlist
+    next_url = request.GET.get('next', reverse_lazy('products:list'))
+    return redirect(next_url)
+
+
+class WishlistListView(ListView):
+    template_name = 'products/wishlist.html'
+    paginate_by = 2
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        wishlist = self.request.session.get('wishlist', [])
+        return Product.objects.filter(id__in=wishlist, is_active=True)
+
+
+class CartListView(ListView):
+    template_name = 'products/cart.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        cart = self.request.session.get('cart', [])
+        return Product.objects.filter(id__in=cart, is_active=True)
